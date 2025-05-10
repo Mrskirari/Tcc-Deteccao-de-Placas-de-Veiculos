@@ -1,0 +1,67 @@
+EXEMPLO DE COMO JOGAR AS INFO DOS BOTOES PARA O BANCO
+
+import sqlite3
+
+def salvar_usuario_no_banco(self, dados):
+    nome, senha, funcao = dados
+    conn = sqlite3.connect("cadastros.db")
+    cursor = conn.cursor()
+    
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            senha TEXT NOT NULL,
+            funcao TEXT NOT NULL
+        )
+    """)
+    
+    cursor.execute("INSERT INTO usuarios (nome, senha, funcao) VALUES (?, ?, ?)", (nome, senha, funcao))
+    conn.commit()
+    conn.close()
+    
+    print("Usuário salvo com sucesso!")
+
+
+def janela_cadastro_usuario(self):
+    self.popup_generico(
+        "Cadastrar Usuário", 
+        ["Nome", "Senha", "Função"], 
+        self.salvar_usuario_no_banco
+    )
+
+
+
+
+
+----------------
+confirmaçao de exclusao
+Exemplo completo usando messagebox.askyesno():
+python
+Copiar
+Editar
+def janela_excluir_placa(self):
+    self.popup_generico(
+        "Excluir Placa",
+        ["Placa"],
+        self.confirmar_exclusao_placa
+    )
+
+def confirmar_exclusao_placa(self, dados):
+    placa = dados[0]
+
+    if not placa.strip():
+        messagebox.showerror("Erro", "Por favor, insira a placa que deseja excluir.")
+        return
+
+    confirmacao = messagebox.askyesno(
+        "Confirmar Exclusão",
+        f"Tem certeza que deseja excluir a placa '{placa}'?"
+    )
+
+    if confirmacao:
+        # Aqui você faria a lógica para excluir do banco de dados, por exemplo
+        print(f"Placa '{placa}' excluída com sucesso!")
+        messagebox.showinfo("Excluído", f"A placa '{placa}' foi excluída.")
+    else:
+        messagebox.showinfo("Cancelado", "A exclusão foi cancelada.")
