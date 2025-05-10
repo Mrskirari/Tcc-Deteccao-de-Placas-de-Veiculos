@@ -1,0 +1,38 @@
+CREATE DATABASE sistema_reconhecimento_placas;
+
+USE sistema_reconhecimento_placas;
+
+-- Tabela de veículos
+CREATE TABLE veiculos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    placa VARCHAR(10) NOT NULL,
+    modelo VARCHAR(50),
+    cor VARCHAR(20),
+    data_registro DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabela de entradas e saídas de veículos
+CREATE TABLE entradas_saidas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_veiculo INT,
+    tipo_entrada_saida ENUM('entrada', 'saida'),
+    data_evento DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_veiculo) REFERENCES veiculos(id)
+);
+
+-- Tabela de imagens capturadas
+CREATE TABLE imagens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_veiculo INT,
+    caminho_imagem VARCHAR(255),
+    data_imagem DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_veiculo) REFERENCES veiculos(id)
+);
+
+-- Tabela de logs do sistema
+CREATE TABLE logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    mensagem TEXT,
+    nivel ENUM('info', 'aviso', 'erro'),
+    data_log DATETIME DEFAULT CURRENT_TIMESTAMP
+);

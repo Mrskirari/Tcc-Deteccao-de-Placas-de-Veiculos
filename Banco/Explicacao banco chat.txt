@@ -1,0 +1,41 @@
+Tabela veiculos: para armazenar informações dos veículos que foram registrados.
+
+id (INT, PK, Auto Increment): Identificador único do veículo.
+
+placa (VARCHAR(10)): A placa do veículo detectada pelo sistema.
+
+modelo (VARCHAR(50)): O modelo do veículo (opcional).
+
+cor (VARCHAR(20)): A cor do veículo (opcional).
+
+data_registro (DATETIME): A data e hora que a placa foi registrada no sistema.
+
+Tabela entradas_saidas: para registrar as entradas e saídas de veículos.
+
+id (INT, PK, Auto Increment): Identificador único para cada entrada/saída.
+
+id_veiculo (INT, FK): Chave estrangeira para a tabela veiculos.
+
+tipo_entrada_saida (ENUM('entrada', 'saida')): Tipo de evento (entrada ou saída do veículo).
+
+data_evento (DATETIME): A data e hora em que o evento ocorreu.
+
+Tabela imagens: para armazenar informações sobre as imagens capturadas durante o processo de reconhecimento de placas.
+
+id (INT, PK, Auto Increment): Identificador único da imagem.
+
+id_veiculo (INT, FK): Chave estrangeira para a tabela veiculos.
+
+caminho_imagem (VARCHAR(255)): Caminho ou URL da imagem capturada.
+
+data_imagem (DATETIME): A data e hora da captura da imagem.
+
+Tabela logs: para registrar logs do sistema, como erros ou falhas no reconhecimento.
+
+id (INT, PK, Auto Increment): Identificador único do log.
+
+mensagem (TEXT): Mensagem de log ou erro gerado.
+
+nivel (ENUM('info', 'aviso', 'erro')): Nível de severidade do log.
+
+data_log (DATETIME): Data e hora do log.

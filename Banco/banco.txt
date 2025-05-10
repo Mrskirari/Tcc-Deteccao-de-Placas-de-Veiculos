@@ -1,0 +1,44 @@
+ create database detectar;
+ use detectar;
+  
+create table usuarios(
+id_usuario int primary key auto_increment not null,
+usuario varchar(30),
+senha varchar(50),
+funcao varchar(30)
+);
+create table veiculos(  
+id_placa INT AUTO_INCREMENT NOT NULL PRIMARY KEY, 
+placa varchar(12) not null,  
+entrada datetime not null,  
+saida datetime not null,
+data_registro DATETIME DEFAULT CURRENT_TIMESTAMP  
+ ); 
+create table entradas_saidas (  
+id INT AUTO_INCREMENT PRIMARY KEY,  
+id_veiculo INT,  
+tipo_entrada_saida ENUM('entrada', 'saida'),  
+data_evento DATETIME DEFAULT CURRENT_TIMESTAMP, 
+ FOREIGN KEY (id_veiculo) REFERENCES veiculos (id_placa) 
+ ); 
+ 
+create table logs( 
+ id_logs INT AUTO_INCREMENT PRIMARY KEY,  
+mensagem TEXT,  
+nivel ENUM('info', 'aviso', 'erro'),  
+data_log DATETIME DEFAULT CURRENT_TIMESTAMP 
+); 
+
+CREATE TABLE registro_usua (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    nome VARCHAR(30) NOT NULL,
+    funcao VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE placas (
+    id_placa INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    id_usuario INT NOT NULL,                  
+    placa VARCHAR(12) NOT NULL,           
+    data_registro DATETIME DEFAULT CURRENT_TIMESTAMP,  
+    FOREIGN KEY (id_usuario) REFERENCES registro_usua(id_usuario)
+);
